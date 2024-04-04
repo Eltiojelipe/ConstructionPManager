@@ -1,4 +1,4 @@
 Equipo de trabajo:
-- Bryan Andrey
-- Geraldine
+- Brayan Andrey Agudelo
+- Geraldine Ramirez
 - Sebastian Davila 

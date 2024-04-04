@@ -9,6 +9,8 @@ namespace Manager.Share.Entities
 {
     public class Material
     {
+        public int Id { get; set; }
+
         [Display(Name = "Nombre del material")]
         [MaxLength(50, ErrorMessage = "No se permiten más de 50 Caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]

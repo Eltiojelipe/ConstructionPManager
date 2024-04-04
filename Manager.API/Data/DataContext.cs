@@ -13,7 +13,7 @@ namespace Manager.API.Data
 
         public DbSet<Tarea> tareas { get; set; }
 
-        public DbSet<Material> materials { get; set; }
+        public DbSet<Material> materiales { get; set; }
 
         
 

@@ -43,12 +43,13 @@ namespace Manager.Share.Entities
         public DateTime FechaFin { get; set; }
         
         [JsonIgnore]
+        public ICollection<Equipos_Construccion> EquiposDeConstruccion { get; set; }
 
-        public Equipos_Construccion Equipo_Construccion { get; set; }
-        public Tarea Tareas { get; set; }
-        public Material Materiales { get; set; }
-        public Maquinaria Maquinarias { get; set; }
+        [JsonIgnore]
+        public ICollection<Tarea> Tareas { get; set; }
 
+        [JsonIgnore]
+        public Presupuesto Presupuesto { get; set; }
     }
 
 }

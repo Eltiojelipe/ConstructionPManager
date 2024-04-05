@@ -33,7 +33,6 @@ namespace Manager.Share.Entities
 
         [JsonIgnore]
 
-        public Proyecto_Construccion Proyectos_Construccion { get; set; }
-        //Falta agregar la conexión con las otras entidades
+        public ICollection<Proyecto_Construccion> ProyectosDeConstruccion { get; set; }
     }
 }

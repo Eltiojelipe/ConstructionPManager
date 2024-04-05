@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Manager.Share.Entities
@@ -26,5 +27,8 @@ namespace Manager.Share.Entities
         [Required(ErrorMessage = "Este campo es obligatorio!")]
         public string Maquinaria { get; set; }
 
+        [JsonIgnore]
+        public int ProyectoDeConstruccionId { get; set; }
+        public Proyecto_Construccion Proyecto_Construccion { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Manager.Share.Entities
@@ -30,5 +31,7 @@ namespace Manager.Share.Entities
         [Required(ErrorMessage = "Este campo es obligatorio!")]
         public bool disponibilidad {  get; set; }
 
+        [JsonIgnore]
+        public ICollection<Tarea> Tareas { get; set; }  
     }
 }

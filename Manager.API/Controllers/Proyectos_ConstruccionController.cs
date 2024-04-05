@@ -8,7 +8,7 @@ namespace Manager.API.Controllers
 {
     [ApiController]
     [Route("/api/Proyectos_Construccion")]
-    public class Proyectos_ConstruccionController : Controller
+    public class Proyectos_ConstruccionController : ControllerBase
     {
         private readonly DataContext _context;
 

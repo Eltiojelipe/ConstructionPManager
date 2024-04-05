@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Manager.Share.Entities
@@ -30,6 +31,7 @@ namespace Manager.Share.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public DateTime deliveryDate { get; set; }
 
+        [JsonIgnore]
         public ICollection<Tarea> tareas { get; set;}
     }
 }

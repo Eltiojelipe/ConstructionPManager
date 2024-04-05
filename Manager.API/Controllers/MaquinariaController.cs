@@ -32,7 +32,7 @@ namespace Manager.API.Controllers
         public async Task<ActionResult> Get(int id)
         {
 
-            var tarea = await _context.maquinaria.FirstOrDefaultAsync(x => x.idMaquinaria == id);
+            var tarea = await _context.maquinaria.FirstOrDefaultAsync(x => x.Id == id);
 
             if (tarea == null)
             {
@@ -65,7 +65,7 @@ namespace Manager.API.Controllers
         {
             var Filasafectadas = await _context.maquinaria
 
-                .Where(x => x.idMaquinaria == id)
+                .Where(x => x.Id == id)
                 .ExecuteDeleteAsync();
 
             if (Filasafectadas == 0)

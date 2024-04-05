@@ -23,7 +23,7 @@ namespace Manager.API.Controllers
         public async Task<ActionResult> Get()
         {
 
-            return Ok(await _context.tareas.ToListAsync());
+            return Ok(await _context.Tareas.ToListAsync());
 
         }
 
@@ -32,7 +32,7 @@ namespace Manager.API.Controllers
         public async Task<ActionResult> Get(int id)
         {
 
-            var tarea = await _context.tareas.FirstOrDefaultAsync(x => x.Id == id);
+            var tarea = await _context.Tareas.FirstOrDefaultAsync(x => x.Id == id);
 
             if (tarea == null)
             {
@@ -63,7 +63,7 @@ namespace Manager.API.Controllers
         [HttpDelete("id:int")]
         public async Task<ActionResult> Delete(int id)
         {
-            var Filasafectadas = await _context.tareas
+            var Filasafectadas = await _context.Tareas
 
                 .Where(x => x.Id == id)
                 .ExecuteDeleteAsync();

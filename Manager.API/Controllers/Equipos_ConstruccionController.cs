@@ -1,10 +1,7 @@
 ﻿using Manager.API.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Manager.API.Data;
 using Manager.Share.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Manager.API.Controllers
 {

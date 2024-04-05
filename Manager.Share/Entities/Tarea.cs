@@ -32,8 +32,6 @@ namespace Manager.Share.Entities
 
         [JsonIgnore]
         public int ProyectoDeConstruccionId { get; set; }
-
-        [JsonIgnore]
         public Proyecto_Construccion Proyecto_Construccion { get; set; }
 
         [JsonIgnore]

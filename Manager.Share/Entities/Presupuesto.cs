@@ -10,7 +10,7 @@ namespace Manager.Share.Entities
 {
     public class Presupuesto
     {
-        public int idPresupuesto { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Mano de obra")]
         [MaxLength(13, ErrorMessage = "El {0} no puede tener más de {1} caracteres")]

@@ -22,7 +22,7 @@ namespace Manager.API.Controllers
         public async Task<ActionResult> Get()
         {
 
-            return Ok(await _context.materiales.ToListAsync());
+            return Ok(await _context.Materiales.ToListAsync());
 
         }
 
@@ -31,7 +31,7 @@ namespace Manager.API.Controllers
         public async Task<ActionResult> Get(int id)
         {
 
-            var material = await _context.materiales.FirstOrDefaultAsync(x => x.Id == id);
+            var material = await _context.Materiales.FirstOrDefaultAsync(x => x.Id == id);
 
             if (material == null)
             {
@@ -62,7 +62,7 @@ namespace Manager.API.Controllers
         [HttpDelete("id:int")]
         public async Task<ActionResult> Delete(int id)
         {
-            var Filasafectadas = await _context.materiales
+            var Filasafectadas = await _context.Materiales
 
                 .Where(x => x.Id == id)
                 .ExecuteDeleteAsync();

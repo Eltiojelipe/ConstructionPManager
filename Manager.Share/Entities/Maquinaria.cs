@@ -10,7 +10,7 @@ namespace Manager.Share.Entities
 {
     public class Maquinaria
     {
-        public int idMaquinaria { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Nombre de la maquinaria")]
         [MaxLength(13, ErrorMessage = "El {0} no puede tener más de {1} caracteres")]
@@ -32,6 +32,7 @@ namespace Manager.Share.Entities
         public bool disponibilidad {  get; set; }
 
         [JsonIgnore]
-        public ICollection<Tarea> Tareas { get; set; }  
+        public ICollection<Tarea> Tareas { get; set; }
+        //public int Id { get; set; }
     }
 }

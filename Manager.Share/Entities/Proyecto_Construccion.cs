@@ -45,6 +45,10 @@ namespace Manager.Share.Entities
         [JsonIgnore]
 
         public Equipos_Construccion Equipo_Construccion { get; set; }
+        public Tarea Tareas { get; set; }
+        public Material Materiales { get; set; }
+        public Maquinaria Maquinarias { get; set; }
+
     }
 
 }

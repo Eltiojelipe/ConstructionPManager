@@ -29,5 +29,7 @@ namespace Manager.Share.Entities
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public DateTime deliveryDate { get; set; }
+
+        public ICollection<Tarea> tareas { get; set;}
     }
 }

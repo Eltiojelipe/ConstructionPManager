@@ -30,5 +30,8 @@ namespace Manager.Share.Entities
         public DateTime DateFinished { get; set; }
 
 
+        public Material Materiales { get; set; }    
+
+        public Maquinaria Maquinarias { get; set; }
     }
 }

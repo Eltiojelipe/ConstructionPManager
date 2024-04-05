@@ -28,7 +28,7 @@ namespace Manager.Share.Entities
         [Display(Name = "Lista de miembros del equipo")]
         [MaxLength(30, ErrorMessage = "El {0} no puede tener más de {1} caracteres")]
         [Required(ErrorMessage = "Este campo es obligatorio!")]
-        public List<string> ListaMiembros { get; set; }
+        public string ListaMiembros { get; set; }
 
 
         [JsonIgnore]

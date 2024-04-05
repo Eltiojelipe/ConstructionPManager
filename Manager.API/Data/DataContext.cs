@@ -14,8 +14,10 @@ namespace Manager.API.Data
         public DbSet<Tarea> tareas { get; set; }
 
         public DbSet<Material> materiales { get; set; }
+        public DbSet <Proyecto_Construccion> Proyectos_Construccion { get; set; }
+        public DbSet <Equipos_Construccion> Equipo_Construccion { get; set; }
 
-        
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

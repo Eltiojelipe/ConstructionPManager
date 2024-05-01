@@ -42,11 +42,12 @@ namespace Manager.Share.Entities
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime FechaFin { get; set; }
         
-        [JsonIgnore]
-        public ICollection<Equipos_Construccion> EquiposDeConstruccion { get; set; }
 
         [JsonIgnore]
         public ICollection<Tarea> Tareas { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Equipos_Proy_Construccion> proy_Construccions { get; set; }
 
         [JsonIgnore]
         public Presupuesto Presupuesto { get; set; }

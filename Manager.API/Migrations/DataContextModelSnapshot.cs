@@ -22,21 +22,6 @@ namespace Manager.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Equipos_ConstruccionProyecto_Construccion", b =>
-                {
-                    b.Property<int>("EquiposDeConstruccionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProyectosDeConstruccionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EquiposDeConstruccionId", "ProyectosDeConstruccionId");
-
-                    b.HasIndex("ProyectosDeConstruccionId");
-
-                    b.ToTable("Equipos_ConstruccionProyecto_Construccion");
-                });
-
             modelBuilder.Entity("Manager.Share.Entities.Equipos_Construccion", b =>
                 {
                     b.Property<int>("Id")
@@ -63,6 +48,29 @@ namespace Manager.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Equipo_Construccion");
+                });
+
+            modelBuilder.Entity("Manager.Share.Entities.Equipos_Proy_Construccion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("equiposId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("proyectoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("equiposId");
+
+                    b.HasIndex("proyectoId");
+
+                    b.ToTable("proy_Construccions");
                 });
 
             modelBuilder.Entity("Manager.Share.Entities.Maquinaria", b =>
@@ -96,6 +104,29 @@ namespace Manager.API.Migrations
                     b.ToTable("maquinaria");
                 });
 
+            modelBuilder.Entity("Manager.Share.Entities.MaquinariaTarea", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("MaquinariaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TareaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaquinariaId");
+
+                    b.HasIndex("TareaId");
+
+                    b.ToTable("maquinariaTareas");
+                });
+
             modelBuilder.Entity("Manager.Share.Entities.Material", b =>
                 {
                     b.Property<int>("Id")
@@ -125,6 +156,34 @@ namespace Manager.API.Migrations
                     b.ToTable("Materiales");
                 });
 
+            modelBuilder.Entity("Manager.Share.Entities.MaterialTarea", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("MaquinariaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TareaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaquinariaId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("TareaId");
+
+                    b.ToTable("MaterialTareas");
+                });
+
             modelBuilder.Entity("Manager.Share.Entities.Presupuesto", b =>
                 {
                     b.Property<int>("Id")
@@ -148,13 +207,7 @@ namespace Manager.API.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
-                    b.Property<int>("ProyectoDeConstruccionId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProyectoDeConstruccionId")
-                        .IsUnique();
 
                     b.ToTable("Presupuesto");
                 });
@@ -183,12 +236,17 @@ namespace Manager.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("PresupuestoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Ubicacion")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PresupuestoId");
 
                     b.ToTable("Proyectos_Construccion");
                 });
@@ -230,60 +288,62 @@ namespace Manager.API.Migrations
                     b.ToTable("Tareas");
                 });
 
-            modelBuilder.Entity("MaquinariaTarea", b =>
+            modelBuilder.Entity("Manager.Share.Entities.Equipos_Proy_Construccion", b =>
                 {
-                    b.Property<int>("MaquinariasId")
-                        .HasColumnType("int");
+                    b.HasOne("Manager.Share.Entities.Equipos_Construccion", "equipos")
+                        .WithMany("Equipos_Proy")
+                        .HasForeignKey("equiposId");
 
-                    b.Property<int>("TareasId")
-                        .HasColumnType("int");
+                    b.HasOne("Manager.Share.Entities.Proyecto_Construccion", "proyecto")
+                        .WithMany("proy_Construccions")
+                        .HasForeignKey("proyectoId");
 
-                    b.HasKey("MaquinariasId", "TareasId");
+                    b.Navigation("equipos");
 
-                    b.HasIndex("TareasId");
-
-                    b.ToTable("MaquinariaTarea");
+                    b.Navigation("proyecto");
                 });
 
-            modelBuilder.Entity("MaterialTarea", b =>
+            modelBuilder.Entity("Manager.Share.Entities.MaquinariaTarea", b =>
                 {
-                    b.Property<int>("MaterialesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("tareasId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MaterialesId", "tareasId");
-
-                    b.HasIndex("tareasId");
-
-                    b.ToTable("MaterialTarea");
-                });
-
-            modelBuilder.Entity("Equipos_ConstruccionProyecto_Construccion", b =>
-                {
-                    b.HasOne("Manager.Share.Entities.Equipos_Construccion", null)
+                    b.HasOne("Manager.Share.Entities.Maquinaria", "Maquinaria")
                         .WithMany()
-                        .HasForeignKey("EquiposDeConstruccionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MaquinariaId");
 
-                    b.HasOne("Manager.Share.Entities.Proyecto_Construccion", null)
-                        .WithMany()
-                        .HasForeignKey("ProyectosDeConstruccionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Manager.Share.Entities.Tarea", "Tarea")
+                        .WithMany("MaquinariasTarea")
+                        .HasForeignKey("TareaId");
+
+                    b.Navigation("Maquinaria");
+
+                    b.Navigation("Tarea");
                 });
 
-            modelBuilder.Entity("Manager.Share.Entities.Presupuesto", b =>
+            modelBuilder.Entity("Manager.Share.Entities.MaterialTarea", b =>
                 {
-                    b.HasOne("Manager.Share.Entities.Proyecto_Construccion", "Proyecto_Construccion")
-                        .WithOne("Presupuesto")
-                        .HasForeignKey("Manager.Share.Entities.Presupuesto", "ProyectoDeConstruccionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Manager.Share.Entities.Maquinaria", null)
+                        .WithMany("MaterialTareas")
+                        .HasForeignKey("MaquinariaId");
 
-                    b.Navigation("Proyecto_Construccion");
+                    b.HasOne("Manager.Share.Entities.Material", "Material")
+                        .WithMany("MaterialTarea")
+                        .HasForeignKey("MaterialId");
+
+                    b.HasOne("Manager.Share.Entities.Tarea", "Tarea")
+                        .WithMany("MaterialTarea")
+                        .HasForeignKey("TareaId");
+
+                    b.Navigation("Material");
+
+                    b.Navigation("Tarea");
+                });
+
+            modelBuilder.Entity("Manager.Share.Entities.Proyecto_Construccion", b =>
+                {
+                    b.HasOne("Manager.Share.Entities.Presupuesto", "Presupuesto")
+                        .WithMany("construcciones")
+                        .HasForeignKey("PresupuestoId");
+
+                    b.Navigation("Presupuesto");
                 });
 
             modelBuilder.Entity("Manager.Share.Entities.Tarea", b =>
@@ -295,41 +355,38 @@ namespace Manager.API.Migrations
                     b.Navigation("Proyecto_Construccion");
                 });
 
-            modelBuilder.Entity("MaquinariaTarea", b =>
+            modelBuilder.Entity("Manager.Share.Entities.Equipos_Construccion", b =>
                 {
-                    b.HasOne("Manager.Share.Entities.Maquinaria", null)
-                        .WithMany()
-                        .HasForeignKey("MaquinariasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Manager.Share.Entities.Tarea", null)
-                        .WithMany()
-                        .HasForeignKey("TareasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Equipos_Proy");
                 });
 
-            modelBuilder.Entity("MaterialTarea", b =>
+            modelBuilder.Entity("Manager.Share.Entities.Maquinaria", b =>
                 {
-                    b.HasOne("Manager.Share.Entities.Material", null)
-                        .WithMany()
-                        .HasForeignKey("MaterialesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("MaterialTareas");
+                });
 
-                    b.HasOne("Manager.Share.Entities.Tarea", null)
-                        .WithMany()
-                        .HasForeignKey("tareasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("Manager.Share.Entities.Material", b =>
+                {
+                    b.Navigation("MaterialTarea");
+                });
+
+            modelBuilder.Entity("Manager.Share.Entities.Presupuesto", b =>
+                {
+                    b.Navigation("construcciones");
                 });
 
             modelBuilder.Entity("Manager.Share.Entities.Proyecto_Construccion", b =>
                 {
-                    b.Navigation("Presupuesto");
-
                     b.Navigation("Tareas");
+
+                    b.Navigation("proy_Construccions");
+                });
+
+            modelBuilder.Entity("Manager.Share.Entities.Tarea", b =>
+                {
+                    b.Navigation("MaquinariasTarea");
+
+                    b.Navigation("MaterialTarea");
                 });
 #pragma warning restore 612, 618
         }

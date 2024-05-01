@@ -32,6 +32,6 @@ namespace Manager.Share.Entities
         public DateTime deliveryDate { get; set; }
 
         [JsonIgnore]
-        public ICollection<Tarea> tareas { get; set;}
+        public ICollection<MaterialTarea> MaterialTarea { get; set;}
     }
 }

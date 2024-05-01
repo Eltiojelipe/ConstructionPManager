@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Manager.API.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class Relacion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,6 +59,21 @@ namespace Manager.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Presupuesto",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ManoObra = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    Materiales = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    Maquinaria = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Presupuesto", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Proyectos_Construccion",
                 columns: table => new
                 {
@@ -68,57 +83,41 @@ namespace Manager.API.Migrations
                     Ubicacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaFin = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    FechaFin = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PresupuestoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Proyectos_Construccion", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Proyectos_Construccion_Presupuesto_PresupuestoId",
+                        column: x => x.PresupuestoId,
+                        principalTable: "Presupuesto",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Equipos_ConstruccionProyecto_Construccion",
-                columns: table => new
-                {
-                    EquiposDeConstruccionId = table.Column<int>(type: "int", nullable: false),
-                    ProyectosDeConstruccionId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Equipos_ConstruccionProyecto_Construccion", x => new { x.EquiposDeConstruccionId, x.ProyectosDeConstruccionId });
-                    table.ForeignKey(
-                        name: "FK_Equipos_ConstruccionProyecto_Construccion_Equipo_Construccion_EquiposDeConstruccionId",
-                        column: x => x.EquiposDeConstruccionId,
-                        principalTable: "Equipo_Construccion",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Equipos_ConstruccionProyecto_Construccion_Proyectos_Construccion_ProyectosDeConstruccionId",
-                        column: x => x.ProyectosDeConstruccionId,
-                        principalTable: "Proyectos_Construccion",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Presupuesto",
+                name: "proy_Construccions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ManoObra = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    Materiales = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    Maquinaria = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    ProyectoDeConstruccionId = table.Column<int>(type: "int", nullable: false)
+                    equiposId = table.Column<int>(type: "int", nullable: true),
+                    proyectoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Presupuesto", x => x.Id);
+                    table.PrimaryKey("PK_proy_Construccions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Presupuesto_Proyectos_Construccion_ProyectoDeConstruccionId",
-                        column: x => x.ProyectoDeConstruccionId,
+                        name: "FK_proy_Construccions_Equipo_Construccion_equiposId",
+                        column: x => x.equiposId,
+                        principalTable: "Equipo_Construccion",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_proy_Construccions_Proyectos_Construccion_proyectoId",
+                        column: x => x.proyectoId,
                         principalTable: "Proyectos_Construccion",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -145,73 +144,98 @@ namespace Manager.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MaquinariaTarea",
+                name: "maquinariaTareas",
                 columns: table => new
                 {
-                    MaquinariasId = table.Column<int>(type: "int", nullable: false),
-                    TareasId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TareaId = table.Column<int>(type: "int", nullable: true),
+                    MaquinariaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaquinariaTarea", x => new { x.MaquinariasId, x.TareasId });
+                    table.PrimaryKey("PK_maquinariaTareas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MaquinariaTarea_Tareas_TareasId",
-                        column: x => x.TareasId,
+                        name: "FK_maquinariaTareas_Tareas_TareaId",
+                        column: x => x.TareaId,
                         principalTable: "Tareas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_MaquinariaTarea_maquinaria_MaquinariasId",
-                        column: x => x.MaquinariasId,
+                        name: "FK_maquinariaTareas_maquinaria_MaquinariaId",
+                        column: x => x.MaquinariaId,
                         principalTable: "maquinaria",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "MaterialTarea",
+                name: "MaterialTareas",
                 columns: table => new
                 {
-                    MaterialesId = table.Column<int>(type: "int", nullable: false),
-                    tareasId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MaterialId = table.Column<int>(type: "int", nullable: true),
+                    TareaId = table.Column<int>(type: "int", nullable: true),
+                    MaquinariaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaterialTarea", x => new { x.MaterialesId, x.tareasId });
+                    table.PrimaryKey("PK_MaterialTareas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MaterialTarea_Materiales_MaterialesId",
-                        column: x => x.MaterialesId,
+                        name: "FK_MaterialTareas_Materiales_MaterialId",
+                        column: x => x.MaterialId,
                         principalTable: "Materiales",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_MaterialTarea_Tareas_tareasId",
-                        column: x => x.tareasId,
+                        name: "FK_MaterialTareas_Tareas_TareaId",
+                        column: x => x.TareaId,
                         principalTable: "Tareas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_MaterialTareas_maquinaria_MaquinariaId",
+                        column: x => x.MaquinariaId,
+                        principalTable: "maquinaria",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Equipos_ConstruccionProyecto_Construccion_ProyectosDeConstruccionId",
-                table: "Equipos_ConstruccionProyecto_Construccion",
-                column: "ProyectosDeConstruccionId");
+                name: "IX_maquinariaTareas_MaquinariaId",
+                table: "maquinariaTareas",
+                column: "MaquinariaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MaquinariaTarea_TareasId",
-                table: "MaquinariaTarea",
-                column: "TareasId");
+                name: "IX_maquinariaTareas_TareaId",
+                table: "maquinariaTareas",
+                column: "TareaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MaterialTarea_tareasId",
-                table: "MaterialTarea",
-                column: "tareasId");
+                name: "IX_MaterialTareas_MaquinariaId",
+                table: "MaterialTareas",
+                column: "MaquinariaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Presupuesto_ProyectoDeConstruccionId",
-                table: "Presupuesto",
-                column: "ProyectoDeConstruccionId",
-                unique: true);
+                name: "IX_MaterialTareas_MaterialId",
+                table: "MaterialTareas",
+                column: "MaterialId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MaterialTareas_TareaId",
+                table: "MaterialTareas",
+                column: "TareaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_proy_Construccions_equiposId",
+                table: "proy_Construccions",
+                column: "equiposId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_proy_Construccions_proyectoId",
+                table: "proy_Construccions",
+                column: "proyectoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proyectos_Construccion_PresupuestoId",
+                table: "Proyectos_Construccion",
+                column: "PresupuestoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tareas_Proyecto_ConstruccionId",
@@ -223,22 +247,13 @@ namespace Manager.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Equipos_ConstruccionProyecto_Construccion");
+                name: "maquinariaTareas");
 
             migrationBuilder.DropTable(
-                name: "MaquinariaTarea");
+                name: "MaterialTareas");
 
             migrationBuilder.DropTable(
-                name: "MaterialTarea");
-
-            migrationBuilder.DropTable(
-                name: "Presupuesto");
-
-            migrationBuilder.DropTable(
-                name: "Equipo_Construccion");
-
-            migrationBuilder.DropTable(
-                name: "maquinaria");
+                name: "proy_Construccions");
 
             migrationBuilder.DropTable(
                 name: "Materiales");
@@ -247,7 +262,16 @@ namespace Manager.API.Migrations
                 name: "Tareas");
 
             migrationBuilder.DropTable(
+                name: "maquinaria");
+
+            migrationBuilder.DropTable(
+                name: "Equipo_Construccion");
+
+            migrationBuilder.DropTable(
                 name: "Proyectos_Construccion");
+
+            migrationBuilder.DropTable(
+                name: "Presupuesto");
         }
     }
 }

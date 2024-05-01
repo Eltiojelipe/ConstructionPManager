@@ -32,7 +32,7 @@ namespace Manager.Share.Entities
         public bool disponibilidad {  get; set; }
 
         [JsonIgnore]
-        public ICollection<Tarea> Tareas { get; set; }
-        //public int Id { get; set; }
+        public ICollection<MaterialTarea> MaterialTareas { get; set; }
+       
     }
 }

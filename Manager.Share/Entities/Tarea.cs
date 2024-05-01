@@ -35,9 +35,9 @@ namespace Manager.Share.Entities
         public Proyecto_Construccion Proyecto_Construccion { get; set; }
 
         [JsonIgnore]
-        public ICollection<Material> Materiales { get; set; }
+        public ICollection<MaterialTarea> MaterialTarea { get; set; }
 
         [JsonIgnore]
-        public ICollection<Maquinaria> Maquinarias { get; set; }
+        public ICollection<MaquinariaTarea> MaquinariasTarea { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -28,7 +29,6 @@ namespace Manager.Share.Entities
         public string Maquinaria { get; set; }
 
         [JsonIgnore]
-        public int ProyectoDeConstruccionId { get; set; }
-        public Proyecto_Construccion Proyecto_Construccion { get; set; }
+        public ICollection<Proyecto_Construccion> construcciones { get; set;}
     }
 }

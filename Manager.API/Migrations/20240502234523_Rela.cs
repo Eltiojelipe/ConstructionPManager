@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Manager.API.Migrations
 {
     /// <inheritdoc />
-    public partial class Relacion : Migration
+    public partial class Rela : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -174,8 +174,7 @@ namespace Manager.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MaterialId = table.Column<int>(type: "int", nullable: true),
-                    TareaId = table.Column<int>(type: "int", nullable: true),
-                    MaquinariaId = table.Column<int>(type: "int", nullable: true)
+                    TareaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -190,11 +189,6 @@ namespace Manager.API.Migrations
                         column: x => x.TareaId,
                         principalTable: "Tareas",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_MaterialTareas_maquinaria_MaquinariaId",
-                        column: x => x.MaquinariaId,
-                        principalTable: "maquinaria",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -206,11 +200,6 @@ namespace Manager.API.Migrations
                 name: "IX_maquinariaTareas_TareaId",
                 table: "maquinariaTareas",
                 column: "TareaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MaterialTareas_MaquinariaId",
-                table: "MaterialTareas",
-                column: "MaquinariaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MaterialTareas_MaterialId",
@@ -256,13 +245,13 @@ namespace Manager.API.Migrations
                 name: "proy_Construccions");
 
             migrationBuilder.DropTable(
+                name: "maquinaria");
+
+            migrationBuilder.DropTable(
                 name: "Materiales");
 
             migrationBuilder.DropTable(
                 name: "Tareas");
-
-            migrationBuilder.DropTable(
-                name: "maquinaria");
 
             migrationBuilder.DropTable(
                 name: "Equipo_Construccion");

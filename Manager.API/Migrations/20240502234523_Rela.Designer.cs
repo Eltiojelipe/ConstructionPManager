@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Manager.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240501202710_Relacion")]
-    partial class Relacion
+    [Migration("20240502234523_Rela")]
+    partial class Rela
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -167,9 +167,6 @@ namespace Manager.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("MaquinariaId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("MaterialId")
                         .HasColumnType("int");
 
@@ -177,8 +174,6 @@ namespace Manager.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MaquinariaId");
 
                     b.HasIndex("MaterialId");
 
@@ -309,7 +304,7 @@ namespace Manager.API.Migrations
             modelBuilder.Entity("Manager.Share.Entities.MaquinariaTarea", b =>
                 {
                     b.HasOne("Manager.Share.Entities.Maquinaria", "Maquinaria")
-                        .WithMany()
+                        .WithMany("MaquinariaTareas")
                         .HasForeignKey("MaquinariaId");
 
                     b.HasOne("Manager.Share.Entities.Tarea", "Tarea")
@@ -323,10 +318,6 @@ namespace Manager.API.Migrations
 
             modelBuilder.Entity("Manager.Share.Entities.MaterialTarea", b =>
                 {
-                    b.HasOne("Manager.Share.Entities.Maquinaria", null)
-                        .WithMany("MaterialTareas")
-                        .HasForeignKey("MaquinariaId");
-
                     b.HasOne("Manager.Share.Entities.Material", "Material")
                         .WithMany("MaterialTarea")
                         .HasForeignKey("MaterialId");
@@ -365,7 +356,7 @@ namespace Manager.API.Migrations
 
             modelBuilder.Entity("Manager.Share.Entities.Maquinaria", b =>
                 {
-                    b.Navigation("MaterialTareas");
+                    b.Navigation("MaquinariaTareas");
                 });
 
             modelBuilder.Entity("Manager.Share.Entities.Material", b =>

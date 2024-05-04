@@ -8,13 +8,13 @@ namespace Manager.API.Controllers
 
 
     [ApiController]
-    [Route("/api/tareas")]
-    public class tareasController : ControllerBase
+    [Route("/api/presupuesto")]
+    public class presupuestoController : ControllerBase
     {
 
         private readonly DataContext _context;
 
-        public tareasController(DataContext context)
+        public presupuestoController(DataContext context)
         {
             _context = context;
         }
@@ -23,7 +23,7 @@ namespace Manager.API.Controllers
         public async Task<ActionResult> Get()
         {
 
-            return Ok(await _context.Tareas.ToListAsync());
+            return Ok(await _context.Presupuesto.ToListAsync());
 
         }
 
@@ -32,7 +32,7 @@ namespace Manager.API.Controllers
         public async Task<ActionResult> Get(int id)
         {
 
-            var tarea = await _context.Tareas.FirstOrDefaultAsync(x => x.Id == id);
+            var tarea = await _context.Presupuesto.FirstOrDefaultAsync(x => x.Id == id);
 
             if (tarea == null)
             {
@@ -43,27 +43,27 @@ namespace Manager.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Tarea tarea)
+        public async Task<ActionResult> Post(Presupuesto presupuesto)
         {
-            _context.Add(tarea);
+            _context.Add(presupuesto);
             await _context.SaveChangesAsync();
-            return Ok(tarea);
+            return Ok(presupuesto);
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put(Tarea tarea)
+        public async Task<ActionResult> Put(Presupuesto presupuesto)
         {
 
-            _context.Update(tarea);
+            _context.Update(presupuesto);
             await _context.SaveChangesAsync();
-            return Ok(tarea);
+            return Ok(presupuesto);
 
         }
 
         [HttpDelete("id:int")]
         public async Task<ActionResult> Delete(int id)
         {
-            var Filasafectadas = await _context.Tareas
+            var Filasafectadas = await _context.Presupuesto
 
                 .Where(x => x.Id == id)
                 .ExecuteDeleteAsync();

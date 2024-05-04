@@ -8,13 +8,13 @@ namespace Manager.API.Controllers
 
 
     [ApiController]
-    [Route("/api/tareas")]
-    public class tareasController : ControllerBase
+    [Route("/api/maquinaria")]
+    public class maquinariaController : ControllerBase
     {
 
         private readonly DataContext _context;
 
-        public tareasController(DataContext context)
+        public maquinariaController(DataContext context)
         {
             _context = context;
         }
@@ -23,7 +23,7 @@ namespace Manager.API.Controllers
         public async Task<ActionResult> Get()
         {
 
-            return Ok(await _context.Tareas.ToListAsync());
+            return Ok(await _context.maquinaria.ToListAsync());
 
         }
 
@@ -32,7 +32,7 @@ namespace Manager.API.Controllers
         public async Task<ActionResult> Get(int id)
         {
 
-            var tarea = await _context.Tareas.FirstOrDefaultAsync(x => x.Id == id);
+            var tarea = await _context.maquinaria.FirstOrDefaultAsync(x => x.Id == id);
 
             if (tarea == null)
             {
@@ -43,11 +43,11 @@ namespace Manager.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Tarea tarea)
+        public async Task<ActionResult> Post(Maquinaria maquinaria)
         {
-            _context.Add(tarea);
+            _context.Add(maquinaria);
             await _context.SaveChangesAsync();
-            return Ok(tarea);
+            return Ok(maquinaria);
         }
 
         [HttpPut]
@@ -63,7 +63,7 @@ namespace Manager.API.Controllers
         [HttpDelete("id:int")]
         public async Task<ActionResult> Delete(int id)
         {
-            var Filasafectadas = await _context.Tareas
+            var Filasafectadas = await _context.maquinaria
 
                 .Where(x => x.Id == id)
                 .ExecuteDeleteAsync();

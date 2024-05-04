@@ -1,7 +1,11 @@
 using Manager.API.Data;
+
 using Manager.API.Helpers;
 using Manager.Share.Entities;
 using Microsoft.AspNetCore.Identity;
+
+using Microsoft.AspNetCore.Builder;
+
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 
 
 builder.Services.AddIdentity<User, IdentityRole>(x =>
@@ -36,6 +41,10 @@ builder.Services.AddTransient<SeedDb>();
 
 
 builder.Services.AddSwaggerGen(); builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=DefaultConnection"));
+
+
+builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=DefaultConnection"));
 
 
 var app = builder.Build();
@@ -95,4 +104,13 @@ static void SeedData(WebApplication app)
 
     app.Run();
 
+
 }
+
+app.UseCors(x => x
+.AllowAnyMethod()
+.AllowAnyHeader()
+.AllowCredentials()
+.SetIsOriginAllowed(origin => true));
+
+app.Run();

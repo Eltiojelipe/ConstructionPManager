@@ -1,0 +1,36 @@
+﻿@using Manager.Share.Entities
+
+<EditForm Model="Material" OnSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    
+    <div class="mb-3">
+       <label>Id:</label>
+        <div>
+            <InputText @bind-Value="Material.Id"></InputText>
+            <ValidationMessage For="@(() => Material.Id)" /> 
+        </div>
+    </div>
+
+</EditForm>
+
+    @code {
+
+        
+
+
+
+        [Parameter]
+        [EditorRequired]
+        public Material Material { get; set; } = null!;
+
+        [Parameter]
+        [EditorRequired]
+        public EventCallback OnSubmit { get; set; }
+
+        [EditorRequired]
+        [Parameter]
+        public EventCallback ReturnAction { get; set; }
+
+
+        
+    }

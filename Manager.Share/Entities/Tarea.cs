@@ -31,6 +31,12 @@ namespace Manager.Share.Entities
         public DateTime DateFinished { get; set; }
 
         [JsonIgnore]
+
+        public Material Materiales { get; set; }
+
+        [JsonIgnore]
+        public Maquinaria Maquinarias { get; set; }
+
         public int ProyectoDeConstruccionId { get; set; }
         public Proyecto_Construccion Proyecto_Construccion { get; set; }
 
@@ -39,5 +45,6 @@ namespace Manager.Share.Entities
 
         [JsonIgnore]
         public ICollection<MaquinariaTarea> MaquinariasTarea { get; set; }
+
     }
 }
